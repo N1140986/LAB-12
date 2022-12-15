@@ -35,7 +35,6 @@ import javax.crypto.spec.PBEKeySpec;
  * @author ntu-user
  */
 public class DB {
-
     private String fileName = "jdbc:sqlite:comp20081.db";
     private int timeout = 30;
     private String dataBaseName = "COMP20081";
@@ -73,9 +72,10 @@ public class DB {
      * @brief create a new table
      * @param tableName name of type String
      */
-    public void createTable(String tableName) {
+    public void createTable(String tableName) throws ClassNotFoundException {
         try {
             // create a database connection
+            Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(fileName);
             var statement = connection.createStatement();
             statement.setQueryTimeout(timeout);
@@ -99,9 +99,10 @@ public class DB {
      * @brief delete table
      * @param tableName of type String
      */
-    public void delTable(String tableName) {
+    public void delTable(String tableName) throws ClassNotFoundException {
         try {
             // create a database connection
+            Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(fileName);
             var statement = connection.createStatement();
             statement.setQueryTimeout(timeout);
@@ -125,8 +126,9 @@ public class DB {
      * @param user name of type String
      * @param password of type String
      */
-        public void addDataToDB(String user, String password) throws InvalidKeySpecException {
+        public void addDataToDB(String user, String password) throws InvalidKeySpecException, ClassNotFoundException {
         try {
+            Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(fileName);
             var statement = connection.createStatement();
             statement.setQueryTimeout(timeout);
@@ -158,9 +160,10 @@ public class DB {
      * @brief get data from the Database method
      * @retunr results as ResultSet
      */
-    public ObservableList<User> getDataFromTable() {
+    public ObservableList<User> getDataFromTable() throws ClassNotFoundException {
         ObservableList<User> result = FXCollections.observableArrayList();
         try {
+            Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(fileName);
             var statement = connection.createStatement();
             statement.setQueryTimeout(timeout);
@@ -191,9 +194,10 @@ public class DB {
      * @param pass plain password of type String
      * @return true if the credentials are valid, otherwise false
      */
-    public boolean validateUser(String user, String pass) throws InvalidKeySpecException {
+    public boolean validateUser(String user, String pass) throws InvalidKeySpecException, ClassNotFoundException {
         Boolean flag = false;
         try {
+            Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(fileName);
             var statement = connection.createStatement();
             statement.setQueryTimeout(timeout);

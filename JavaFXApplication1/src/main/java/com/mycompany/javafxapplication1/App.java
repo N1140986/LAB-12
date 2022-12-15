@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * JavaFX App
@@ -19,9 +21,17 @@ public class App extends Application {
         DB myObj = new DB();
         myObj.log("-------- Simple Tutorial on how to make JDBC connection to SQLite DB ------------");
         myObj.log("\n---------- Drop table ----------");
-        myObj.delTable(myObj.getTableName());
+        try {
+            myObj.delTable(myObj.getTableName());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
         myObj.log("\n---------- Create table ----------");
-        myObj.createTable(myObj.getTableName());
+        try {
+            myObj.createTable(myObj.getTableName());
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
+        }
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("primary.fxml"));

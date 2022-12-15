@@ -69,8 +69,10 @@ public class SecondaryController {
     public void initialise(String[] credentials) {
         userTextField.setText(credentials[0]);
         DB myObj = new DB();
-        ObservableList<User> data = myObj.getDataFromTable();
-        TableColumn user = new TableColumn("User");
+        ObservableList<User> data;
+        try {
+            data = myObj.getDataFromTable();
+            TableColumn user = new TableColumn("User");
         user.setCellValueFactory(
         new PropertyValueFactory<>("user"));
 
@@ -79,5 +81,8 @@ public class SecondaryController {
             new PropertyValueFactory<>("pass"));
         dataTableView.setItems(data);
         dataTableView.getColumns().addAll(user, pass);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SecondaryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
